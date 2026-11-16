@@ -47,7 +47,7 @@ export default function Disenador() {
       {aviso && (
         <div className="fixed bottom-6 left-1/2 z-30 -translate-x-1/2 rounded-xl bg-ink px-4 py-3 text-sm font-bold text-white shadow-lg">
           {aviso}{' '}
-          <a href="#/" className="underline">Ver</a>
+          <a href="#/tareas" className="underline">Ver</a>
         </div>
       )}
     </div>

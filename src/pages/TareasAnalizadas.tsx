@@ -44,7 +44,7 @@ export default function TareasAnalizadas() {
           <p className="mb-3 text-neutral-600">
             Aún no hay tareas analizadas. Abre un ejercicio y pulsa «Analizar objetivos»: se guardará aquí, agrupado por tipo de tarea.
           </p>
-          <a href="#/" className="btn-primary">Ir a la librería</a>
+          <a href="#/tareas" className="btn-primary">Ir a la librería</a>
         </div>
       ) : (
         grupos.map(([tipo, tareas]) => (

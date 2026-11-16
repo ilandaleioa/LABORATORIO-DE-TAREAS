@@ -15,6 +15,28 @@ interface Form {
   equipo: EquipoPlantilla
   foto: string
 }
+// Jugadores de ejemplo: 2 porteros, 3 defensas, 3 medios y 2 delanteros por equipo.
+const EJEMPLO: Record<EquipoPlantilla, [string, string, PosicionPlantilla][]> = {
+  'Primer equipo': [
+    ['Asier', 'Perez', 'Portero'], ['Juan', 'Lopez', 'Portero'],
+    ['Kepa', 'Arana', 'Defensa'], ['Unai', 'Etxeberria', 'Defensa'], ['Mikel', 'Goikoetxea', 'Defensa'],
+    ['Oier', 'Zubiaurre', 'Medio'], ['Iker', 'Ibarra', 'Medio'], ['Aitor', 'Larrazabal', 'Medio'],
+    ['Gorka', 'Urrutia', 'Delantero'], ['Ander', 'Mendizabal', 'Delantero'],
+  ],
+  'Juvenil A': [
+    ['Eneko', 'Aguirre', 'Portero'], ['Jon', 'Basterra', 'Portero'],
+    ['Xabier', 'Garmendia', 'Defensa'], ['Beñat', 'Olazabal', 'Defensa'], ['Markel', 'Uriarte', 'Defensa'],
+    ['Julen', 'Arrieta', 'Medio'], ['Haritz', 'Sagarna', 'Medio'], ['Ibai', 'Lekuona', 'Medio'],
+    ['Asier', 'Elorza', 'Delantero'], ['Gaizka', 'Bilbao', 'Delantero'],
+  ],
+  'Juvenil B': [
+    ['Aimar', 'Cortazar', 'Portero'], ['Lander', 'Insausti', 'Portero'],
+    ['Peru', 'Alberdi', 'Defensa'], ['Unax', 'Landa', 'Defensa'], ['Danel', 'Mugika', 'Defensa'],
+    ['Iñigo', 'Ormaetxea', 'Medio'], ['Alex', 'Zabala', 'Medio'], ['Hodei', 'Gandarias', 'Medio'],
+    ['Naiel', 'Azkue', 'Delantero'], ['Mattin', 'Arriola', 'Delantero'],
+  ],
+}
+
 const vacio: Form = { dorsal: '', nombre: '', apellido: '', posicion: 'Portero', equipo: 'Primer equipo', foto: '' }
 
 // Reduce la imagen a 256px máx. y la guarda como data URL (el almacenamiento es localStorage).
@@ -101,6 +123,22 @@ export default function Plantillas() {
     }
   }
 
+  const añadirEjemplo = () => {
+    const actuales = listarPlantilla()
+    let n = 0
+    for (const eq of EQUIPOS_PLANTILLA) {
+      let dorsal = 1
+      for (const [nombre, apellido, posicion] of EJEMPLO[eq]) {
+        if (actuales.some((j) => (j.equipo ?? 'Primer equipo') === eq && j.nombre === nombre && j.apellido === apellido)) continue
+        while (actuales.some((j) => (j.equipo ?? 'Primer equipo') === eq && j.dorsal === dorsal)) dorsal++
+        actuales.push(crearJugadorPlantilla({ dorsal, nombre, apellido, posicion, equipo: eq }))
+        n++
+      }
+    }
+    recargar()
+    window.alert(`${n} jugadores añadidos.`)
+  }
+
   const cancelar = () => {
     setEditId(null)
     setForm(vacio)
@@ -123,6 +161,9 @@ export default function Plantillas() {
       <div className="flex flex-wrap items-center gap-3">
         <h1 className="text-lg font-extrabold">Plantillas</h1>
         <span className="text-sm font-bold text-neutral-500">{jugadores.length} jugadores</span>
+        <button type="button" onClick={añadirEjemplo} className="rounded-full border border-line bg-white px-3 py-1 text-xs font-bold hover:border-athletic hover:text-athletic">
+          + Añadir jugadores de ejemplo
+        </button>
       </div>
 
       <form ref={formRef} onSubmit={guardar} className="grid gap-3 rounded-2xl bg-white p-4 shadow-card ring-1 ring-black/5 sm:grid-cols-2 lg:grid-cols-[64px_100px_1fr_1fr_160px_160px_auto] lg:items-end">

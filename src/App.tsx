@@ -26,10 +26,10 @@ export default function App() {
   const editar = ruta.match(/^\/ejercicio\/([^/]+)\/editar$/)
   const detalle = ruta.match(/^\/ejercicio\/([^/]+)$/)
 
-  const enLibreria = ruta === '/' || ruta === '/analizadas' || Boolean(detalle)
+  const enLibreria = ruta === '/tareas' || ruta === '/analizadas' || Boolean(detalle)
   const enDisenador = ruta === '/disenador'
   const enSesiones = ruta === '/sesiones'
-  const enPlantillas = ruta === '/plantillas'
+  const enPlantillas = ruta === '/plantillas' || ruta === '/'
   const enNuevo = ruta === '/nuevo' || Boolean(editar)
   const navLink = (activo: boolean) =>
     `rounded-full px-4 py-2 text-sm font-bold transition ${activo ? 'bg-athletic text-white shadow-sm shadow-athletic/30' : 'text-ink hover:bg-neutral-100 hover:text-athletic'}`
@@ -54,7 +54,7 @@ export default function App() {
             <a href="#/disenador" className={`${navLink(enDisenador)} hidden sm:inline`}>
               Diseñador
             </a>
-            <a href="#/" className={`${navLink(enLibreria || enNuevo)} hidden sm:inline`}>
+            <a href="#/tareas" className={`${navLink(enLibreria || enNuevo)} hidden sm:inline`}>
               Tareas
             </a>
             <a href="#/sesiones" className={`${navLink(enSesiones)} hidden sm:inline`}>
@@ -109,7 +109,7 @@ export default function App() {
             [
               ['#/plantillas', 'Plantillas', enPlantillas, 'M16 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3zM8 12a3 3 0 1 0-3-3 3 3 0 0 0 3 3zM2 20v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1M15 15h3a4 4 0 0 1 4 4v1'],
               ['#/disenador', 'Diseñador', enDisenador, 'M4 20l4-1 11-11-3-3L5 16l-1 4zM14 6l3 3'],
-              ['#/', 'Tareas', enLibreria || enNuevo, 'M4 5h16M4 12h16M4 19h16'],
+              ['#/tareas', 'Tareas', enLibreria || enNuevo, 'M4 5h16M4 12h16M4 19h16'],
               ['#/sesiones', 'Sesiones', enSesiones, 'M5 4h14v16H5zM9 9h6M9 13h6'],
             ] as [string, string, boolean, string][]
           ).map(([href, texto, activo, d]) => (
