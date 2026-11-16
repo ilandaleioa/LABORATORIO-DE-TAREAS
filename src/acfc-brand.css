@@ -1,0 +1,32 @@
+/* Identidad visual AC Football Center (extraída de acfootballcenter.eus, tema Kadence) */
+@font-face { font-family: 'DIN PRO'; font-weight: 400; font-style: normal; font-display: swap;
+  src: url('/brand/fonts/DINPro.woff2') format('woff2'), url('/brand/fonts/DINPro.woff') format('woff'); }
+@font-face { font-family: 'DIN PRO'; font-weight: 700; font-style: normal; font-display: swap;
+  src: url('/brand/fonts/DINPro-Bold.woff2') format('woff2'), url('/brand/fonts/DINPro-Bold.woff') format('woff'); }
+
+:root {
+  --acfc-red: #d3291e;        /* palette1 · acento principal */
+  --acfc-red-dark: #b6170d;   /* palette2 · hover */
+  --acfc-ink: #1b2026;        /* palette3 · texto/títulos, borde botones */
+  --acfc-slate: #353c45;      /* palette4 */
+  --acfc-black: #202020;      /* palette5 */
+  --acfc-gray: #707070;       /* palette6 · texto secundario */
+  --acfc-line: #c4c4c4;       /* palette7 · bordes */
+  --acfc-bg: #f8f8f8;         /* palette8 · fondo */
+  --acfc-white: #ffffff;      /* palette9 */
+  --acfc-font: 'DIN PRO', Helvetica, Arial, sans-serif;
+  --acfc-fs-sm: clamp(0.8rem, 0.73rem + 0.217vw, 0.9rem);
+  --acfc-fs-md: clamp(1.1rem, 0.995rem + 0.326vw, 1.25rem);
+  --acfc-fs-lg: clamp(1.75rem, 1.576rem + 0.543vw, 2rem);
+  --acfc-fs-xl: clamp(2.25rem, 1.728rem + 1.63vw, 3rem);
+  --acfc-fs-xxl: clamp(2.5rem, 1.456rem + 3.26vw, 4rem);
+}
+body { font-family: var(--acfc-font); color: var(--acfc-ink); background: var(--acfc-bg); }
+h1,h2,h3,h4,h5,h6 { font-family: var(--acfc-font); font-weight: 700; color: var(--acfc-ink); }
+
+/* Botón de la web: cuadrado (radius 0), borde 2px, DIN PRO, hover borde rojo */
+.acfc-btn { font-family: var(--acfc-font); font-size: 1.2em; line-height: 1em; text-transform: capitalize;
+  border: 2px solid var(--acfc-ink); border-radius: 0; padding: .75em 1em; background: transparent; color: var(--acfc-ink); }
+.acfc-btn:hover, .acfc-btn:focus { border-color: var(--acfc-red); }
+.acfc-btn-primary { background: var(--acfc-red); border-color: var(--acfc-red); color: #fff; }
+.acfc-btn-primary:hover { background: var(--acfc-red-dark); border-color: var(--acfc-red-dark); }
