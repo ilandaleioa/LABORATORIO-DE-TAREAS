@@ -419,7 +419,7 @@ export default function NuevoEjercicio({ editarId, soloLectura = false }: { edit
           ← Volver al ejercicio
         </a>
       )}
-      <h1 className="mb-2 text-xl font-extrabold">{soloLectura ? 'Ejercicio' : editarId ? 'Editar ejercicio' : 'Nuevo ejercicio'}</h1>
+      <p className="kicker mb-2">Ficha de tarea</p><h1 className="page-title mb-3">{soloLectura ? 'Ejercicio' : editarId ? 'Editar ejercicio' : 'Nuevo ejercicio'}</h1>
 
       <div className={`grid gap-4 lg:items-start ${original ? 'lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] xl:grid-cols-[minmax(0,4fr)_minmax(0,5fr)_minmax(0,6fr)]' : 'lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]'}`}>
       {/* Columna izquierda: imagen + datos generales a su lado, y debajo colores y equipos */}

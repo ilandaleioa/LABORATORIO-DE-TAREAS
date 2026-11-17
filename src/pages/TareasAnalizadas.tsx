@@ -35,8 +35,8 @@ export default function TareasAnalizadas() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Análisis guardados</p>
-        <h1 className="text-3xl font-extrabold leading-tight">Tareas analizadas</h1>
+        <p className="kicker mb-2">Análisis guardados</p>
+        <h1 className="page-title">Tareas analizadas</h1>
       </div>
 
       {grupos.length === 0 ? (

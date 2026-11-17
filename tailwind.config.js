@@ -2,19 +2,20 @@
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
+    borderRadius: { none: '0', sm: '0', DEFAULT: '0', md: '0', lg: '0', xl: '0', '2xl': '0', '3xl': '0', full: '9999px' },
     extend: {
       colors: {
         athletic: { DEFAULT: '#d3291e', dark: '#b6170d', light: '#fdeceb' },
         ink: '#1b2026',
-        surface: '#f6f6f7',
-        line: '#dcdde0',
+        surface: '#f6f5f2',
+        line: '#e7e5e1',
       },
       fontFamily: {
-        sans: ['DIN PRO', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: ['Akrobat', 'DIN PRO', 'Helvetica', 'Arial', 'sans-serif'],
       },
       boxShadow: {
-        card: '0 1px 2px rgba(27,32,38,0.04), 0 4px 14px -6px rgba(27,32,38,0.10)',
-        lift: '0 2px 4px rgba(27,32,38,0.05), 0 14px 30px -10px rgba(27,32,38,0.22)',
+        card: 'none',
+        lift: '0 10px 24px -12px rgba(0,0,0,0.5)',
       },
     },
   },

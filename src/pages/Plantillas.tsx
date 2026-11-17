@@ -159,7 +159,7 @@ export default function Plantillas() {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-lg font-extrabold">Plantillas</h1>
+        <div><p className="kicker mb-2">Plantilla del equipo</p><h1 className="page-title">Plantillas</h1></div>
         <span className="text-sm font-bold text-neutral-500">{jugadores.length} jugadores</span>
         <button type="button" onClick={añadirEjemplo} className="rounded-full border border-line bg-white px-3 py-1 text-xs font-bold hover:border-athletic hover:text-athletic">
           + Añadir jugadores de ejemplo

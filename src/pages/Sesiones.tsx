@@ -7,6 +7,7 @@ import VisorImagen from '../components/VisorImagen'
 import Asistente from '../components/Asistente'
 import Icon from '../components/Icons'
 import { crearInformeSesion } from '../lib/informeSesion'
+import { descargarFichaSesion } from '../lib/kitPptx'
 
 const MOTIVOS = ['Lesión', 'Vacaciones', 'Otro equipo']
 
@@ -239,7 +240,7 @@ export default function Sesiones() {
     guardar({ equipo, jugadores: lista })
   }
 
-  const informePDF = (conAsistente: boolean) => {
+  const informePDF = (conAsistente: boolean, pptx = false) => {
     setMenuInforme(false)
     if (!activa) return
     const aNumero = (v?: string) => (v && Number(v) > 0 ? Number(v) : undefined)
@@ -274,6 +275,19 @@ export default function Sesiones() {
       alert('Añade al menos una tarea a la sesión para crear el informe.')
       return
     }
+    if (pptx) {
+      descargarFichaSesion({
+        numero: activa.numero,
+        equipo: activa.equipo,
+        fecha: activa.fecha,
+        hora: activa.hora,
+        ubicacion: activa.ubicacion,
+        asisten,
+        ausentes,
+        tareas,
+      }).catch((err) => alert('No se pudo crear el PowerPoint: ' + (err as Error).message))
+      return
+    }
     crearInformeSesion({
       numero: activa.numero,
       equipo: activa.equipo,
@@ -299,7 +313,7 @@ export default function Sesiones() {
         }
       >
       <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-lg font-extrabold">Sesiones</h1>
+        <div><p className="kicker mb-2">Ficha de sesión</p><h1 className="page-title">Sesiones</h1></div>
         <button
           onClick={nueva}
           className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-bold text-white transition hover:bg-black"
@@ -353,6 +367,9 @@ export default function Sesiones() {
                   </button>
                   <button onClick={() => informePDF(false)} className="flex w-full items-center gap-2 border-t border-line px-4 py-2.5 text-left text-sm font-bold hover:bg-athletic-light">
                     <Icon name="file" className="h-4 w-4 text-athletic" /> Sin asistente
+                  </button>
+                  <button onClick={() => informePDF(false, true)} className="flex w-full items-center gap-2 border-t border-line px-4 py-2.5 text-left text-sm font-bold hover:bg-athletic-light">
+                    <Icon name="file" className="h-4 w-4 text-athletic" /> PowerPoint (.pptx)
                   </button>
                 </div>
               </>
@@ -414,9 +431,7 @@ export default function Sesiones() {
         )
       ) : !activa ? null : (
         <>
-          {pestana === 'datos' && (
-            <div className="space-y-5">
-              <section className="grid gap-3 rounded-2xl bg-white p-4 shadow-card ring-1 ring-black/5 sm:grid-cols-2 lg:grid-cols-5">
+          <section className={`grid gap-3 rounded-2xl bg-white p-4 shadow-card ring-1 ring-black/5 sm:grid-cols-2 lg:grid-cols-5 ${pestana === 'sesion' ? 'mb-5' : ''}`}>
                 <label className="space-y-1 text-xs font-bold uppercase tracking-wide text-neutral-500">
                   Fecha
                   <input type="date" className={input} value={activa.fecha} onChange={(e) => guardar({ fecha: e.target.value })} />
@@ -445,8 +460,10 @@ export default function Sesiones() {
                   Nº de sesión
                   <input className={input} value={activa.numero} placeholder="1" onChange={(e) => guardar({ numero: e.target.value })} />
                 </label>
-              </section>
+          </section>
 
+          {pestana === 'datos' && (
+            <div className="mt-5 space-y-5">
               <section className="space-y-4 rounded-2xl bg-white p-4 shadow-card ring-1 ring-black/5">
                 <div className="flex flex-wrap items-center gap-3">
                   <h2 className="text-base font-extrabold">Jugadores</h2>

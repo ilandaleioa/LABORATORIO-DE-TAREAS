@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { duplicarEjercicio, eliminarEjercicio, listarEjercicios, listarTareasAnalizadas } from '../lib/api'
+import { duplicarEjercicio, eliminarEjercicio, listarEjercicios, listarTareasAnalizadas, parsearDescripcion } from '../lib/api'
+import { descargarFichaTarea } from '../lib/kitPptx'
 import type { Ejercicio } from '../types'
 import Spinner from '../components/Spinner'
 import Icon from '../components/Icons'
@@ -37,6 +38,24 @@ export default function Biblioteca() {
     }
   }
 
+  const ficha = (e: Ejercicio) => {
+    const f = parsearDescripcion(e.descripcion ?? '')
+    const n = (v: string) => (Number(v) > 0 ? Number(v) : undefined)
+    descargarFichaTarea({
+      numero: 0,
+      nombre: e.nombre,
+      tipo: e.categoria ?? undefined,
+      imagenUrl: e.imagen_url,
+      largo: n(f.largo),
+      ancho: n(f.ancho),
+      descripcion: [f.descripcion, f.objetivo && `Objetivo: ${f.objetivo}`].filter(Boolean).join('\n\n'),
+      normas: f.normas,
+      variantes: f.variantes,
+      claves: f.claves,
+      petos: [],
+    }).catch((err) => window.alert('No se pudo crear el PowerPoint: ' + (err as Error).message))
+  }
+
   const duplicar = (e: Ejercicio) => {
     try {
       const copia = duplicarEjercicio(e)
@@ -58,11 +77,12 @@ export default function Biblioteca() {
 
   return (
     <div className="space-y-4">
+      <div><p className="kicker mb-2">Librería de ejercicios</p><h1 className="page-title">Tareas</h1></div>
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
         <button
           onClick={() => setFiltro(filtro === 'Analizadas' ? 'Todas' : 'Analizadas')}
-          className={`shrink-0 rounded-full px-5 py-2 text-lg font-extrabold transition ${
+          className={`shrink-0 rounded-full px-5 py-2 text-sm font-bold transition ${
             filtro === 'Analizadas'
               ? 'bg-athletic text-white shadow-sm'
               : 'bg-athletic/10 text-athletic ring-1 ring-athletic/30 hover:bg-athletic/20'
@@ -138,6 +158,9 @@ export default function Biblioteca() {
                 <a href={`#/ejercicio/${e.id}/editar`} title="Editar" aria-label="Editar" className={accion}>
                   <Icon name="pencil" className="h-4 w-4" />
                 </a>
+                <button type="button" onClick={() => ficha(e)} title="Ficha PowerPoint" aria-label="Ficha PowerPoint" className={`${accion} !w-auto px-2 text-[10px] font-extrabold tracking-wide`}>
+                  FICHA
+                </button>
                 <button type="button" onClick={() => duplicar(e)} title="Duplicar" aria-label="Duplicar" className={accion}>
                   <Icon name="copy" className="h-4 w-4" />
                 </button>

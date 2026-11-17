@@ -16,7 +16,9 @@
     background: #d3291e;
     color: #fff;
   }
-  h1,
+  h1 {
+    @apply font-bold uppercase leading-[0.95] tracking-tight;
+  }
   h2,
   h3 {
     @apply tracking-tight;
@@ -48,10 +50,10 @@
 @layer components {
   /* ── Botones ───────────────────────────────────────────── */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-bold transition duration-150 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-[12px] font-bold uppercase tracking-[0.12em] transition duration-150 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none;
   }
   .btn-primary {
-    @apply btn bg-athletic text-white shadow-sm shadow-athletic/30 hover:bg-athletic-dark hover:shadow-md hover:shadow-athletic/30;
+    @apply btn bg-athletic text-white hover:bg-athletic-dark;
   }
   .btn-dark {
     @apply btn bg-ink text-white hover:bg-black;
@@ -60,33 +62,33 @@
     @apply btn bg-white text-ink ring-1 ring-line hover:bg-neutral-50 hover:ring-neutral-400;
   }
   .link-action {
-    @apply inline-flex items-center gap-1 text-xs font-bold text-athletic transition hover:text-athletic-dark hover:underline underline-offset-2;
+    @apply inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.1em] text-athletic transition hover:text-athletic-dark hover:underline underline-offset-2;
   }
 
   /* ── Superficies ───────────────────────────────────────── */
   .card {
-    @apply rounded-2xl bg-white p-4 shadow-card ring-1 ring-black/5 md:p-5;
+    @apply bg-white p-4 ring-1 ring-line md:p-5;
   }
   .card-hover {
     @apply transition duration-200 hover:-translate-y-0.5 hover:shadow-lift hover:ring-athletic/30;
   }
   .stat {
-    @apply rounded-xl bg-white p-4 shadow-card ring-1 ring-black/5;
+    @apply bg-white p-4 ring-1 ring-line;
   }
 
   /* ── Tipografía de sección ─────────────────────────────── */
   .eyebrow {
-    @apply text-[11px] font-bold uppercase tracking-[0.12em] text-neutral-500;
+    @apply text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-500;
   }
   .section-title {
-    @apply mb-2 mt-5 flex items-center gap-2 text-[13px] font-extrabold uppercase tracking-[0.08em] text-black;
+    @apply mb-2 mt-5 flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-ink;
   }
   .section-title::before {
     content: '';
-    @apply h-4 w-1 shrink-0 rounded-full bg-athletic;
+    @apply h-2.5 w-2.5 shrink-0 bg-athletic;
   }
   .chip {
-    @apply inline-flex items-center rounded-full bg-athletic-light px-3 py-1 text-xs font-bold text-athletic;
+    @apply inline-flex items-center bg-athletic px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-white;
   }
   .prose-ac {
     @apply space-y-1 text-[15px] leading-relaxed text-neutral-700;
@@ -94,10 +96,10 @@
 
   /* ── Formularios ───────────────────────────────────────── */
   .field {
-    @apply w-full rounded-lg border border-line bg-white px-3 py-2 text-sm shadow-sm transition placeholder:text-neutral-400 hover:border-neutral-400 focus:border-athletic focus:outline-none focus:ring-2 focus:ring-athletic/25;
+    @apply w-full border border-line bg-white px-3 py-2 text-sm transition placeholder:text-neutral-400 hover:border-neutral-400 focus:border-athletic focus:outline-none focus:ring-2 focus:ring-athletic/25;
   }
   .label {
-    @apply mb-1 block text-xs font-bold uppercase tracking-wide text-neutral-700;
+    @apply mb-1 block text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-600;
   }
 }
 
@@ -118,3 +120,42 @@
   appearance: none;
 }
 .solo-lectura:disabled .field::placeholder { color: transparent; }
+
+/* ── Línea visual del kit ACFC (PARA-EL-SISTEMA-DE-IBON / kit del curso) ─────────────
+   Tinta #15181d, rojo #d3291e, esquinas rectas, filetes finos, rótulos en mayúsculas espaciadas,
+   cuadrado rojo antes de cada apartado y bandas oscuras de cabecera y pie. */
+.kicker { display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; }
+.kicker::before { content: ''; width: 34px; height: 12px; flex-shrink: 0;
+  background: repeating-linear-gradient(90deg, #d3291e 0 4px, transparent 4px 7px); }
+.page-title { font-size: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem); font-weight: 700; text-transform: uppercase; line-height: .95; letter-spacing: -.005em; }
+.band { background: #15181d; color: #fff; }
+.chip-line { display: inline-flex; align-items: center; border: 1px solid #cfccc6; padding: 3px 10px; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.callout { background: #fcefed; border: 1px solid #f3cfcb; padding: 12px 16px; }
+/* Pastillas y botones redondos pasan a rectos (los puntos y avatares, que no son botones, se quedan) */
+button.rounded-full, a.rounded-full, label.rounded-full { border-radius: 0; }
+button.rounded-full:not([class*="uppercase"]):not(.no-kit), a.rounded-full:not([class*="uppercase"]):not(.no-kit) { text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+
+@media screen {
+  :root:not(.claro) { color-scheme: dark; }
+  html:not(.claro), html:not(.claro) body { background-color: #0f1216; color: #eceef1; }
+  html:not(.claro) body { background-image: none; }
+  html:not(.claro) .bg-white, html:not(.claro) .card, html:not(.claro) .stat, html:not(.claro) .field, html:not(.claro) .btn-ghost { background-color: #15181d !important; }
+  html:not(.claro) .bg-white\/95 { background-color: rgba(21, 24, 29, 0.95) !important; }
+  html:not(.claro) .bg-neutral-50, html:not(.claro) .bg-neutral-100 { background-color: #1b1f25 !important; }
+  html:not(.claro) .bg-neutral-200 { background-color: #262b32 !important; }
+  html:not(.claro) .bg-ink { background-color: #2a2f36 !important; }
+  html:not(.claro) .bg-ink:hover { background-color: #343a42 !important; }
+  html:not(.claro) .text-ink, html:not(.claro) h1, html:not(.claro) h2, html:not(.claro) h3, html:not(.claro) h4, html:not(.claro) h5, html:not(.claro) h6 { color: #fff; }
+  html:not(.claro) .text-neutral-800, html:not(.claro) .text-neutral-700, html:not(.claro) .text-neutral-600 { color: #c9cdd2 !important; }
+  html:not(.claro) .text-neutral-500, html:not(.claro) .text-neutral-400 { color: #8f979f !important; }
+  html:not(.claro) .border-line, html:not(.claro) .ring-line { border-color: #3a4046; --tw-ring-color: #3a4046; }
+  html:not(.claro) .ring-black\/5 { --tw-ring-color: #3a4046; }
+  html:not(.claro) .shadow-card { box-shadow: none; }
+  html:not(.claro) .hover\:bg-neutral-100:hover, html:not(.claro) .hover\:bg-neutral-50:hover { background-color: #21262d !important; }
+  html:not(.claro) .hover\:bg-athletic-light:hover, html:not(.claro) .bg-athletic-light { background-color: rgba(211, 41, 30, 0.16) !important; }
+  html:not(.claro) .section-title { color: #fff; }
+  html:not(.claro) .chip-line { border-color: #4a5057; color: #cfd2d6; }
+  html:not(.claro) .callout { background: rgba(211, 41, 30, 0.12); border-color: rgba(211, 41, 30, 0.35); }
+  html:not(.claro) .solo-lectura:disabled .field, html:not(.claro) .solo-lectura:disabled select.field { background-color: #15181d !important; }
+  html:not(.claro) *:focus-visible { --tw-ring-offset-color: #0f1216; }
+}
